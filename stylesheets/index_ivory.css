@@ -1,0 +1,95 @@
+/*code for google-pretty-print*/
+.str {
+  color: #008800;
+}
+/* string content */
+.kwd {
+  color: #000088;
+}
+/* a keyword */
+.com {
+  color: #880000;
+}
+/* a comment */
+.typ {
+  color: #660066;
+}
+/* a type name */
+.lit {
+  color: #006666;
+}
+/* a literal value */
+/* punctuation, lisp open bracket, lisp close bracket */
+.pun,
+.opn,
+.clo {
+  color: #666600;
+}
+.tag {
+  color: #000088;
+}
+/* a markup tag name */
+.atn {
+  color: #660066;
+}
+/* a markup attribute name */
+.atv {
+  color: #008800;
+}
+/* a markup attribute value */
+.dec,
+.var {
+  color: #660066;
+}
+/* a declaration; a variable name */
+.fun {
+  color: #ff0000;
+}
+/* a function name */
+.content {
+  width: 100%;
+  height: auto;
+  background-color: #f2f2f2;
+  padding: 30px 12px;
+}
+.note {
+  background-color: #e9e9e9;
+  padding: 10px 0;
+  color: #333333;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+.bs-glyphicons {
+  padding-left: 0;
+  padding-bottom: 1px;
+  margin-bottom: 20px;
+  list-style: none;
+  overflow: hidden;
+}
+.bs-glyphicons li {
+  float: left;
+  width: 20%;
+  height: 115px;
+  padding: 10px;
+  margin: 0 -1px -1px 0;
+  font-size: x-small;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.bs-glyphicons .glyphicon {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+.bs-glyphicons .glyphicon-class {
+  display: block;
+  text-align: center;
+}
+.bs-glyphicons li:hover {
+  background-color: rgba(86, 61, 124, 0.1);
+}
+/*# sourceMappingURL=index_ivory.css.map */

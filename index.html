@@ -1,11 +1,11 @@
 <!doctype html> 
 <html lang="zh-cn"> 
 <head> 
-	<meta charset="utf-8" /> 
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<title>API</title>
-	<link rel="stylesheet" type="text/css" href="stylesheets/main_ivory.css" media="all">
-	<script src="javascripts/jquery-2.0.3.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>CC98 API Document</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/main_ivory.css" media="all">
+  <script src="javascripts/jquery-2.0.3.min.js"></script>
   <script src="javascripts/grammar.js"></script>
   <script src="javascripts/jsDump.js"></script>
   <script src="javascripts/index.js"></script>
@@ -13,36 +13,23 @@
   <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 </head>
 <body>
-	<div class="grid">
+  <div class="grid">
     <div id="content" class="c12">
-      \h1{新版标记代码完全手册}
-
-      \hline
-
-      \h2{目录}
-      \list*{
-          \* \toanchor{新98代码和原98代码的区别}
-          \list*{
-              \*\toanchor{语义级别标签}
-              \*\toanchor{支持类似TeX的语法}
-              \*\toanchor{其他的不同}
-          }
-          \* \toanchor{元素标签及代码}
-          \list*{
-              \* \toanchor{区块级元素与行内元素}
-              \* \toanchor{常用元素}
-              \list*{
-                  \* \toanchor{段落、换行和水平分割}
-                  \* \toanchor{标题与子标题}
-                  \* \toanchor{引文与引用}
-                  \* \toanchor{有序列表和无序列表}
-                  \* \toanchor{代码}
-                  \* \toanchor{特殊意义文字}
-                  \* \toanchor{超链接和锚点}
-                  \* \toanchor{表格}
-              }
-          }
-      }
+      \h1{CC98 API Document}
+      \table{begin}
+        \r{\h URI Pattern \h HTTP Variable \h Functionality \h Request \h Response}
+        \r{\h /sample_uri \d GET/POST/PUT/DELETE \d API样例 \d Header + JSON Schema \d Header(Response Code) + JSON Schema + Cache Level}
+        \r{\h /login    \d POST  \d 登入 \d \d }
+        \r{\h /logout   \d DELETE \d 登出 \d \d }
+        \r{\h /register \d POST  \d 注册 \d \d }
+        \r{\h /index    \d GET   \d 首页信息 \d \d }
+        \r{\h /borders  \d GET   \d 所有版面信息 \d \d }
+        \r{\h /border/:id \d GET \d 指定版面信息 \d \d }
+        \r{\h /border/:id \d POST \d 创建版面 \d \d }
+        \r{\h /border/:id \d PUT \d 更新版面 \d \d }
+        \r{\h /broder/:id \d DELETE \d 删除版面 \d \d }
+        \r{\h /border/:id/posts \d GET \d 指定版面的所有帖子信息 \d \d }
+      \table{end}
     </div>
   </div>
 </body>

@@ -16,20 +16,50 @@
   <div class="grid">
     <div id="content" class="c12">
       \h1{CC98 API Document}
+      
+      \h2{Introduction - 简介}
+      
+      \h3{此为CC98论坛程序接口文档，遵循RESTful API设计，有任何问题请联系许是程(lightxuzju at gmail.com)。}
+      
+      \h2{Common API error - 常见接口错误}
+      
+      \h2{API quick reference - 接口快速浏览}
       \table{begin}
-        \r{\h URI Pattern \h HTTP Variable \h Functionality \h Request \h Response}
-        \r{\h /sample_uri \d GET/POST/PUT/DELETE \d API样例 \d Header + JSON Schema \d Header(Response Code) + JSON Schema + Cache Level}
-        \r{\h /login    \d POST  \d 登入 \d \d }
-        \r{\h /logout   \d DELETE \d 登出 \d \d }
-        \r{\h /register \d POST  \d 注册 \d \d }
-        \r{\h /index    \d GET   \d 首页信息 \d \d }
-        \r{\h /borders  \d GET   \d 所有版面信息 \d \d }
-        \r{\h /border/:id \d GET \d 指定版面信息 \d \d }
-        \r{\h /border/:id \d POST \d 创建版面 \d \d }
-        \r{\h /border/:id \d PUT \d 更新版面 \d \d }
-        \r{\h /broder/:id \d DELETE \d 删除版面 \d \d }
-        \r{\h /border/:id/posts \d GET \d 指定版面的所有帖子信息 \d \d }
+        \r{\h URI Pattern  \h HTTP Variable \h Functionality \h Request \h Response}
+        \r{\h /sample_uri  \h GET/POST/PUT/DELETE \h API样例 \h Header + JSON Schema \h Header(Response Code) + JSON Schema + Cache Level}
+        \r{\hc5 用户相关}
+        \r{\h /login       \d POST   \d 登入 \d \d }
+        \r{\h /logout      \d DELETE \d 登出 \d \d }
+        \r{\h /register    \d POST   \d 注册 \d \d }
+        \r{\h /users/:id   \d GET    \d 用户控制面板 \d \d }
+        \r{\h /users/:id   \d PUT    \d 更新用户信息 \d \d }
+        \r{\hc5 版面相关}
+        \r{\h /borders/:id \d GET    \d 查看版面 \d \d }
+        \r{\hc5 帖子相关}
+        \r{\h /posts       \d POST   \d 创建帖子 \d \d }
+        \r{\h /posts/:id   \d GET    \d 查看帖子 \d \d }
+        \r{\h /posts/:id   \d PUT    \d 更新帖子 \d \d }
+        \r{\h /posts/:id   \d DELETE \d 删除帖子 \d \d }
+        \r{\hc5 后台管理}
+        \r{\h /admin/users/:id   \d PUT    \d 修改用户的信息、权限等 \d \d }
+        \r{\h /admin/users/:id   \d DELETE \d 删除用户 \d \d }
+        \r{\h /admin/borders     \d POST   \d 创建版面 \d \d }
+        \r{\h /admin/borders/:id \d PUT    \d 更新版面 \d \d }
+        \r{\h /admin/borders/:id \d DELETE \d 删除版面 \d \d }
+        \r{\h /admin/posts/:id   \d PUT    \d 更新帖子 \d \d }
+        \r{\h /admin/posts/:id   \d DELETE \d 删除帖子 \d \d }
       \table{end}
+      
+      \h2{JSON Schemas - JSON 格式}
+      
+      \h2{References - 学习资料}
+      \list*{
+        \* \link+[RESTful API tutorial]{ http://www.restapitutorial.com/ }
+        \* \link+[Learn REST: A Tutorial]{ http://rest.elkstein.org/ }
+        \* \link+[Dropbox REST API]{ https://www.dropbox.com/developers/core/docs/ }
+        \* \link+[JSON Schema]{ http://json-schema.org/ }
+        \* \link+[AmazonS3 REST API]{ http://docs.aws.amazon.com/AmazonS3/2006-03-01/API/APIRest.html/ }
+      }
     </div>
   </div>
 </body>

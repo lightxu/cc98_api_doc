@@ -5,6 +5,7 @@
 @font-face {
     font-family: 'ubuntu';
     src: url('ubuntu-r-webfont.eot');
+    src: local('ubuntu');
     src: url('ubuntu-r-webfont.eot?#iefix') format('embedded-opentype'),
          url('ubuntu-r-webfont.woff') format('woff'),
          url('ubuntu-r-webfont.ttf') format('truetype'),
@@ -20,6 +21,7 @@
 @font-face {
     font-family: 'ubuntu';
     src: url('ubuntu-ri-webfont.eot');
+    src: local('ubuntu');
     src: url('ubuntu-ri-webfont.eot?#iefix') format('embedded-opentype'),
          url('ubuntu-ri-webfont.woff') format('woff'),
          url('ubuntu-ri-webfont.ttf') format('truetype'),
@@ -35,6 +37,7 @@
 @font-face {
     font-family: 'ubuntu';
     src: url('ubuntu-b-webfont.eot');
+    src: local('ubuntu');
     src: url('ubuntu-b-webfont.eot?#iefix') format('embedded-opentype'),
          url('ubuntu-b-webfont.woff') format('woff'),
          url('ubuntu-b-webfont.ttf') format('truetype');
@@ -49,6 +52,7 @@
 @font-face {
     font-family: 'ubuntu';
     src: url('ubuntu-bi-webfont.eot');
+    src: local('ubuntu');
     src: url('ubuntu-bi-webfont.eot?#iefix') format('embedded-opentype'),
          url('ubuntu-bi-webfont.woff') format('woff'),
          url('ubuntu-bi-webfont.ttf') format('truetype');

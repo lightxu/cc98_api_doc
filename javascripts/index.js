@@ -5,6 +5,6 @@ function buildErrorMessage(e) {
 }
 
 $(document).ready(function () {
-  var parsed_html = pegjs.parse($("#content").text());
-  $("#content").html(parsed_html);
+  var parsed_ast = pegjs.parse($("#content").text());
+  $("#content").jsml(parsed_ast);
 });

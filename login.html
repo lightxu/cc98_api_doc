@@ -1,0 +1,133 @@
+<!doctype html> 
+<html lang="zh-cn"> 
+<head> 
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>CC98 API Document: Log in/out</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/main_ivory.css" media="all">
+  <script src="javascripts/jquery-2.0.3.min.js"></script>
+  <script src="javascripts/grammar.js"></script>
+  <script src="javascripts/jsml.js"></script>
+  <script src="javascripts/login.js"></script>
+  <script src="javascripts/google-code-prettify/prettify.js"></script>
+  <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+</head>
+<body>
+  <div class="grid">
+    <div id="content" class="c12">
+\h1{CC98 API Document: Log in/out}
+
+\h2{Introduction - 简介}
+
+\list* {
+  \* 此为CC98论坛程序接口文档，遵循RESTful API设计，有任何问题请联系lightxuzju\[at\]gmail.com。
+}
+
+此文档描述了CC98论坛的登录、登出接口。CC98的认证采用\link+[OAuth2: Resource Owner Password Credentials]{http://tools.ietf.org/html/rfc6749#section-4.3}.
+
+\anchor{login}
+\h2{Log in - 登录}
+
+\strong{注意}：登录必须在HTTPS下完成，以避免密码被中间人截获。后端应该有相应机制（比如登录出错后延时机制）保证不会受到暴力尝试密码的攻击。
+
+\h3{Request}
+
+URL: \@/login\@  
+Method: \@POST\@  
+Content-Type: \@application/x-www-form-urlencoded\@
+
+\table[Parameters]{begin}
+  \r{ \h 参数名 \h 是否必需 \h 值 \h 说明 }
+  \r{ \d grant_type \d YES \d (string)\@password\@ \d OAuth2 要求}
+  \r{ \d username \d YES \d (string)用户登录名 \d OAuth2 要求}
+  \r{ \d password \d YES \d (string)用户密码 \d OAuth2 要求}
+  \r{ \d continue \d YES \d (string)登录成功后跳转的URL \d 进入登录页面前的页面}
+\table{end}
+
+\h3{Response}
+
+\h4{正常}
+
+Status Code: \@200 OK\@  
+Content-Type: \@application/json;charset=UTF-8\@  
+Cache-Control: \@no-store\@  
+Pragma: \@no-cache\@
+
+\table[Parameters]{begin}
+  \r{ \h 参数名 \h 是否必需 \h 值 \h 说明 }
+  \r{ \d access_token \d YES \d (string)随机生成的token \d OAuth2 要求}
+  \r{ \d token_type \d YES \d (string)\@Bearer\@ \d OAuth2 要求}
+  \r{ \d expires_in \d YES \d (integer)token过期秒数 \d OAuth2 建议}
+  \r{ \d continue \d YES \d (string)登录成功后跳转的URL \d 进入登录页面前的页面}
+\table{end}
+
+\code+[json]{begin}
+{
+  "type": "object",
+  "required": ["access_token", "token_type", "expires_in", "continue"],
+  "properties": {
+    "access_token": {
+      "type": "string",
+    },
+    "token_type": {
+      "type": "string",
+    },
+    "expires_in": {
+      "type": "integer",
+    },
+    "continue": {
+      "type": "string",
+    }
+  }
+}
+\code+{end}
+
+\strong{关于token过期}：OAuth2规定token应该有一个过期时间，这个时间在此API中的作用被定义为：最长授权访问时间，即在收到服务器任意一授权回复后该时间内没有发起授权请求，视为自动登出。后端需要维护token的过期时间：过期时刻 = 最后一次授权请求回复的时刻+过期时间（expires_in）。
+
+\h4{错误}
+
+错误回复请查看：\link+[OAuth2: Error Response]{http://tools.ietf.org/html/rfc6749#section-5.2}，前端默认动作为再次要求用户输入登录信息。
+
+\hline
+
+\h2{Access - 授权访问}
+
+授权的访问只需要在每个请求的头部加入：
+\@Authorization: Bearer {access_token}\@
+其中的access_token，替换为正常登录后返回的值。
+
+错误回复请查看：\link+[OAuth2: Error Response]{http://tools.ietf.org/html/rfc6749#section-5.2}，前端默认动作是显示错误信息后跳转到登陆界面，并设置其continue参数为访问的URL。
+
+\hline
+
+\anchor{logout}
+\h2{Log out - 登出}
+
+登出即使用授权访问\@/logout\@。
+
+\h3{Request}
+
+URL: \@/logout\@  
+Method: \@DELETE\@  
+Content-Type: \@application/json\@  
+Authorization: \@Bearer {access_token}\@
+
+\table[Parameters]{begin}
+  \r{ \h 参数名 \h 是否必需 \h 值 \h 说明 }
+  \r{ \d continue \d YES \d (string)登出成功后跳转的URL \d 登出前的页面}
+\table{end}
+
+\h3{Response}
+
+\h4{正常}
+
+跳转到continue。
+
+\h4{错误}
+
+与普通的的授权访问处理相同。
+
+    </div>
+  </div>
+</body>
+</html>

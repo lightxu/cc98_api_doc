@@ -30,5 +30,19 @@
     },
     { "rel": "describedBy",
       "href": "{id}"
-    }
+    },
+    { "rel": "search",
+      "href": "/basic/UserObject",
+      "description": "GET http://www.cc98.org/basic/UserObject?search_for=",
+      "method": "GET",
+      "schema": {
+        "type": "object",
+        "properties": {
+            "search_for":{
+                "title": "search term of user name",
+                "type": "string"
+            }
+        }
+      }
+    }]
 }

@@ -189,7 +189,8 @@ Pragma: "no-cache"
       
       \code+{begin}
 {
-  "title": "CC98 JSON Schema",
+  "title": "CC98 JSON Schema", 
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://www.cc98.org/schema",
   "description": "JSON schema for cc98.org",
   "type": "object",
@@ -201,7 +202,7 @@ Pragma: "no-cache"
           "type": "string"
         },
         "face_url": {
-          "type: "string"
+          "type": "string"
         },
         "introduction": {
           "type": "string"
@@ -294,7 +295,7 @@ Pragma: "no-cache"
                 "type": "integer"
               },
               "mother": {
-                "description: "给你零花钱的老妈",
+                "description": "给你零花钱的老妈",
                 "type": "integer"
               }
             }

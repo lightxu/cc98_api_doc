@@ -1,0 +1,33 @@
+{
+  "title": "CC98 JSON Schema", 
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "JSON schema for cc98.org",
+  "type": "object",
+  "required": ["nick_name", "face_icon_id", "money"],
+  "properties":{
+    "nick_name":{
+      "type": "string"
+    },
+    "face_icon_id":{
+      "type": "string"
+    },
+    "money":{
+      "type": "interger",
+      "minimum": 0
+    }
+  },
+  "links":[
+    { "rel": "root",
+      "href": "http://www.cc98.org/basic/UserObject"},
+    { "rel": "self",
+      "href": "/{user_id}"
+      "description": "GET http://www.cc98.org/basic/UserObject/{user_id}",
+      "method": "GET",
+      "schema": {
+        "type": "object",
+        "required":["user_id"],
+        "properties":{
+          "user_id": { "type": "string" }
+        }
+    }
+}

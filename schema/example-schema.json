@@ -38,11 +38,37 @@
       "schema": {
         "type": "object",
         "properties": {
-            "search_for":{
-                "title": "search term of user name",
-                "type": "string"
-            }
+          "search_for":{
+            "title": "search term of user name",
+            "type": "string"
+          }
         }
       }
-    }]
+    },
+    { "rel": "info",
+      "href": "/basic/UserObject/{user_id}/info",
+      "title": "More information at user's personal page",
+      "description": "GET http://www.cc98.org/basic/UserObject/{user_id}/info",
+      "method": "GET",
+      "targetSchema": { "$ref": "#/definitions/info" }
+    }],
+    "definitions": {
+      "title": "all the sub schema of UserObject",
+      "info":{
+        "type": "object",
+        "title": "User's information for personal page",
+        "properties": {
+          "user_id":{
+            "type": "string"
+          }
+          /* TODO */
+        },
+        "links":[
+          { "rel": "self",
+            "href": "/basic/UserObject/{user_id}/info",
+            "description": "GET http://www.cc98.org/basic/UserObject/{user_id}/info",
+            "method": "GET"
+          }]
+      }
+    }
 }

@@ -94,7 +94,6 @@ Datetime
 Server: "cc98"
 Cache-Control: "no-store"
 Pragma: "no-cache"
-
 {
   "access_token": string,
   "token_type": string,
@@ -181,202 +180,192 @@ Pragma: "no-cache"
         \r{\h /admin/posts/:id   \d DELETE \d 删除帖子 \d \d }
       \table{end}
       
-      \h2{JSON Schemas - JSON 格式}
-      
-      \h3{UserObject}
-      \code+{begin}
-{
-  "title": "User",
-  "id": "UserObject",
-  "type": "object",
-  "properties": {
-    "nick_name": {
-      "type": "string"
-    },
-    "face_url": {
-      "type: "string"
-    },
-    "introduction": {
-      "type": "string"
-    },
-    "money": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "posts": {
-      "type": "array",
-      "items": {"$ref": "PostObject"}
-    }
-  }
-}
-      \code+{end}
-      
-      \h3{BoardObject}
+      \h2{JSON Schema - JSON 格式}
       
       \code+{begin}
 {
-  "title": "Board",
-  "id": "BoardObject",
+  "title": "CC98 JSON Schema",
+  "id": "http://www.cc98.org/schema",
+  "description": "JSON schema for cc98.org",
   "type": "object",
-  "properties": {
-    "title": {
-      "type": "string"
-    },
-    "admin_ids": {
-      "type": "array",
-      "items": {"type": "integer"}
-    },
-    "admins": {
-      "type": "array",
-      "items": {"$ref": "UserObject"}
-    },
-    "introduction": {
-      "type": "string"
-    },
-    "created_datetime": {
-      "type": "string",
-      "format": "YYYY-MM-DDThh:mm:ssTZD"
-    },
-    "posts_count": {
-      "type": "integer"
-    },
-    "latest_post": {
-      "$ref": "PostObject"
-    },
-    "post_ids": {
-      "type": "array",
-      "items": {"type": "integer"}
-    },
-    "posts_tree": {
-      "type": "array",
-      "items": {
-        "title": "page",
-        "type": "array",
-        "items": {"$ref": "PostObject"}
-      }
-    },
-    "parent_boarder": {
-      "type": "integer"
-    },
-    "board_children": {
-      "type": "array",
-      "items": {"$ref": "BoardObject"}
-    }
-  }
-}
-      \code+{end}
-      
-      \h3{PostObject}
-      \code+{begin}
-{
-  "title": "Post",
-  "id": "PostObject",
-  "type": "object",
-  "properties": {
-    "title": {
-      "type": "string"
-    },
-    "owner_id": {
-      "type": "integer"
-    },
-    "type": {
-      "type": "string",
-      "options": ["topic", // 一般话题帖
-                  "qa", // 问答帖
-                  "reply", // 对其他帖的回复
-                  "vote" // 投票帖
-      ]
-    },
-    "awards": {
-      "description": "别人/管理员对此帖的鼓励",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          },
-          "money": {
-            "type": "integer"
-          },
-          "mother": {
-            "description: "给你零花钱的老妈",
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "gift": {
-      "description": "你给别人的礼物",
+  "definitions": {
+    "UserObject": {
       "type": "object",
       "properties": {
+        "nick_name": {
+          "type": "string"
+        },
+        "face_url": {
+          "type: "string"
+        },
+        "introduction": {
+          "type": "string"
+        },
         "money": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "posts": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/PostObject"}
+        }
+      }
+    }, 
+    "BoardObject": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "admin_ids": {
+          "type": "array",
+          "items": {"type": "integer"}
+        },
+        "admins": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/UserObject"}
+        },
+        "introduction": {
+          "type": "string"
+        },
+        "created_datetime": {
+          "type": "string",
+          "format": "YYYY-MM-DDThh:mm:ssTZD"
+        },
+        "posts_count": {
           "type": "integer"
         },
-        "monkey": {
+        "latest_post": {
+          "$ref": "PostObject"
+        },
+        "post_ids": {
+          "type": "array",
+          "items": {"type": "integer"}
+        },
+        "posts_tree": {
+          "type": "array",
+          "items": {
+            "title": "page",
+            "type": "array",
+            "items": {"$ref": "#/definitions/PostObject"}
+          }
+        },
+        "parent_boarder": {
           "type": "integer"
+        },
+        "board_children": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/BoardObject"}
         }
       }
     },
-    "content": {
-      "type": "string"
-    },
-    "created_datetime": {
-      "type": "string",
-      "format": "YYYY-MM-DDThh:mm:ssTZD"
-    },
-    "modified_datetime": {
-      "type": "string",
-      "format": "YYYY-MM-DDThh:mm:ssTZD"
-    },
-    "board_id": {
-      "type": "integer"
-    },
-    "replies_count": {
-      "type": "integer"
-    },
-    "reply_ids": {
-      "type": "array",
-      "items": {"type": "integer"}
-    },
-    "replies_tree": {
-      "type": "array",
-      "items": {
-        "title": "page",
-        "type": "array",
-        "items": {"$ref": "PostObject"}
-      }
-    },
-    "reply_to_id": {
-      "description": "回复帖所回复的帖子ID",
-      "type": "integer"
-    },
-    "accepted_reply_id": {
-      "description": "回答帖所接受的回复",
-      "type": "integer"
-    },
-    "options": {
-      "description": "投票帖的选项统计",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string"
-          },
-          "votes_count": {
-            "type": "integer"
-          },
-          "votes_ids": {
-            "description": "投票用户的ID",
+    "PostObject": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "owner_id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "options": ["topic", // 一般话题帖
+                      "qa", // 问答帖
+                      "reply", // 对其他帖的回复
+                      "vote" // 投票帖
+          ]
+        },
+        "awards": {
+          "description": "别人/管理员对此帖的鼓励",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "money": {
+                "type": "integer"
+              },
+              "mother": {
+                "description: "给你零花钱的老妈",
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "gift": {
+          "description": "你给别人的礼物",
+          "type": "object",
+          "properties": {
+            "money": {
+              "type": "integer"
+            },
+            "monkey": {
+              "type": "integer"
+            }
+          }
+        },
+        "content": {
+          "type": "string"
+        },
+        "created_datetime": {
+          "type": "string",
+          "format": "YYYY-MM-DDThh:mm:ssTZD"
+        },
+        "modified_datetime": {
+          "type": "string",
+          "format": "YYYY-MM-DDThh:mm:ssTZD"
+        },
+        "board_id": {
+          "type": "integer"
+        },
+        "replies_count": {
+          "type": "integer"
+        },
+        "reply_ids": {
+          "type": "array",
+          "items": {"type": "integer"}
+        },
+        "replies_tree": {
+          "type": "array",
+          "items": {
+            "title": "page",
             "type": "array",
-            "items": {"type": "integer"}
+            "items": {"$ref": "#/definitions/PostObject"}
+          }
+        },
+        "reply_to_id": {
+          "description": "回复帖所回复的帖子ID",
+          "type": "integer"
+        },
+        "accepted_reply_id": {
+          "description": "回答帖所接受的回复",
+          "type": "integer"
+        },
+        "options": {
+          "description": "投票帖的选项统计",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string"
+              },
+              "votes_count": {
+                "type": "integer"
+              },
+              "votes_ids": {
+                "description": "投票用户的ID",
+                "type": "array",
+                "items": {"type": "integer"}
+              }
+            }
           }
         }
       }
     }
-  }
-}
       \code+{end}
       \h2{References - 学习资料}
       \list*{

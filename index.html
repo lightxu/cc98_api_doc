@@ -19,10 +19,141 @@
       
       \h2{Introduction - 简介}
       
-      \h3{此为CC98论坛程序接口文档，遵循RESTful API设计，有任何问题请联系许是程(lightxuzju at gmail.com)。}
+      \list* {
+        \* 此为CC98论坛程序接口文档，遵循RESTful API设计，有任何问题请联系lightxuzju\[at\]gmail.com。
+      }
       
-      \h2{Common API error - 常见接口错误}
+      \h2{Common request headers - 常见请求头}
       
+      \h3{Normal request - 一般请求}
+      
+      \list* {
+        \* This header must be included in all request headers.
+        \* More information about Cache-Control is in \link+[RFC2616 Section 14.9]{http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9}
+      }
+      
+      \code+{begin}
+VARIABLE url HTTP_VERSION
+Host: REQUIRED. Example: "www.cc98.org"
+Content-Type: REQUIRED. The content type of the resource in case the request content in the body. Example: "application/json"
+Datetime: REQUIRED. The sending datetime of the request.
+Cache-Control: The Cache-Control general-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
+  Example: "no-cache" | "no-store" | "max-age" | "max-stale" | "min-fresh" | "no-transform" | "only-if-cached" | cache-extension
+      \code+{end}
+      
+      \h3{Access token request - 访问令牌请求}
+      
+      \list* {
+        \* We are using OAuth 2.0, for more information, see \link+[RFC6749 Section 4.3]{http://tools.ietf.org/html/rfc6749#section-4.3}
+      }
+      
+      \code+{begin}
+VARIABLE url HTTP_VERSION
+Host: "www.cc98.org" (or "auth.cc98.org")
+Content-Type: "application/x-www-form-urlencoded"
+Datetime
+grant_type: REQUIRED. Value MUST be set to "password".
+username: REQUIRED. The resource owner user name.
+password: REQUIRED. The resource owner password.
+scope: OPTIONAL. The scope of the access request.
+      \code+{end}
+      
+      \h3{Protected resource request - 被保护的资源请求}
+      
+      \code+{begin}
+VARIABLE url HTTP_VERSION
+Host: "www.cc98.org"
+Content-Type: "text/plain", "application/json"
+Authorization: hmac username:[base64encode(hmac(login, access token, datetime, variable, url))]
+      \code+{end}
+      
+      \h2{Common response headers - 常见响应头}
+      
+      \h3{Normal response - 正常响应}
+      
+      \list* {
+        \* This header must be included in all request headers.
+        \* More information about Cache-Control is in \link+[RFC2616 Section 14.9]{http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9}
+      }
+      
+      \code+{begin}
+HTTP_VERSION RESPONSE_CODE
+Content-Type: "text/html; charset=utf-8"
+Datetime: The response date and time.
+Server: "cc98"
+Cache-Control: The Cache-Control general-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
+  Example: "public" | "private" | no-cache" | "no-store" | "no-transform" | "must-revalidate" | "proxy-revalidate" | "max-age" | "s-maxage" | cache-extension
+      \code+{end}
+      
+      \h3{Access token response - 访问令牌响应}
+      
+      \code+{begin}
+HTTP/1.1 200 OK
+Content-Type: application/json;chaset=utf-8
+Datetime
+Server: "cc98"
+Cache-Control: "no-store"
+Pragma: "no-cache"
+
+{
+  "access_token": string,
+  "token_type": string,
+  "expires_in": integer,
+  "refresh_token": string,
+  "example_parameter": string
+}
+      \code+{end}
+      
+      \h2{Common response code - 常见响应代码}
+      
+      \h3{1xx Informational}
+      \list* {
+        \* 100 Continue
+        \* 101 Switching Protocols
+      }
+      \h3{2xx Success}
+      \list* {
+        \* 200 OK
+        \* 201 Created
+        \* 202 Accepted
+        \* 203 Non-Authoritative Information
+        \* 204 No Content
+      }
+      \h3{3xx Redirection}
+      \list* {
+        \* 300 Multiple Choices
+        \* 301 Moved Permanently
+        \* 302 Found
+        \* 303 See Other
+        \* 304 Not Modified
+      }
+      \h3{4xx Client Error}
+      \list* {
+        \* 400 Bad Request
+        \* 401 Unauthorized
+        \* 402 Payment Required
+        \* 403 Forbidden
+        \* 404 Not Found
+        \* 405 Method Not Allowed
+        \* 406 Not Acceptable
+        \* 407 Proxy Authentication Required
+        \* 408 Request Timeout
+        \* 409 Conflict
+        \* 410 Gone
+        \* 411 Length Required
+        \* 412 Precondition Failed
+        \* 413 Request Entity Too Large
+        \* 414 Request-URI Too Long
+        \* 415 Unsupported Media Type
+        \* 416 Requested Range Not Satisfiable
+      }
+      \h3{5xx Server Error}
+      \list* {
+        \* 500 Internal Server Error
+        \* 501 Not Implemented
+        \* 502 Bad Gateway
+        \* 503 Service Unavailable
+      }
       \h2{API quick reference - 接口快速浏览}
       \table{begin}
         \r{\h URI Pattern  \h HTTP Variable \h Functionality \h Request \h Response}
@@ -34,7 +165,7 @@
         \r{\h /users/:id   \d GET    \d 用户控制面板 \d \d }
         \r{\h /users/:id   \d PUT    \d 更新用户信息 \d \d }
         \r{\hc5 版面相关}
-        \r{\h /borders/:id \d GET    \d 查看版面 \d \d }
+        \r{\h /boards/:id \d GET    \d 查看版面 \d \d }
         \r{\hc5 帖子相关}
         \r{\h /posts       \d POST   \d 创建帖子 \d \d }
         \r{\h /posts/:id   \d GET    \d 查看帖子 \d \d }
@@ -52,13 +183,210 @@
       
       \h2{JSON Schemas - JSON 格式}
       
+      \h3{UserObject}
+      \code+{begin}
+{
+  "title": "User",
+  "id": "UserObject",
+  "type": "object",
+  "properties": {
+    "nick_name": {
+      "type": "string"
+    },
+    "face_url": {
+      "type: "string"
+    },
+    "introduction": {
+      "type": "string"
+    },
+    "money": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "posts": {
+      "type": "array",
+      "items": {"$ref": "PostObject"}
+    }
+  }
+}
+      \code+{end}
+      
+      \h3{BoardObject}
+      
+      \code+{begin}
+{
+  "title": "Board",
+  "id": "BoardObject",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "admin_ids": {
+      "type": "array",
+      "items": {"type": "integer"}
+    },
+    "admins": {
+      "type": "array",
+      "items": {"$ref": "UserObject"}
+    },
+    "introduction": {
+      "type": "string"
+    },
+    "created_datetime": {
+      "type": "string",
+      "format": "YYYY-MM-DDThh:mm:ssTZD"
+    },
+    "posts_count": {
+      "type": "integer"
+    },
+    "latest_post": {
+      "$ref": "PostObject"
+    },
+    "post_ids": {
+      "type": "array",
+      "items": {"type": "integer"}
+    },
+    "posts_tree": {
+      "type": "array",
+      "items": {
+        "title": "page",
+        "type": "array",
+        "items": {"$ref": "PostObject"}
+      }
+    },
+    "parent_boarder": {
+      "type": "integer"
+    },
+    "board_children": {
+      "type": "array",
+      "items": {"$ref": "BoardObject"}
+    }
+  }
+}
+      \code+{end}
+      
+      \h3{PostObject}
+      \code+{begin}
+{
+  "title": "Post",
+  "id": "PostObject",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "integer"
+    },
+    "type": {
+      "type": "string",
+      "options": ["topic", // 一般话题帖
+                  "qa", // 问答帖
+                  "reply", // 对其他帖的回复
+                  "vote" // 投票帖
+      ]
+    },
+    "awards": {
+      "description": "别人/管理员对此帖的鼓励",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "money": {
+            "type": "integer"
+          },
+          "mother": {
+            "description: "给你零花钱的老妈",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "gift": {
+      "description": "你给别人的礼物",
+      "type": "object",
+      "properties": {
+        "money": {
+          "type": "integer"
+        },
+        "monkey": {
+          "type": "integer"
+        }
+      }
+    },
+    "content": {
+      "type": "string"
+    },
+    "created_datetime": {
+      "type": "string",
+      "format": "YYYY-MM-DDThh:mm:ssTZD"
+    },
+    "modified_datetime": {
+      "type": "string",
+      "format": "YYYY-MM-DDThh:mm:ssTZD"
+    },
+    "board_id": {
+      "type": "integer"
+    },
+    "replies_count": {
+      "type": "integer"
+    },
+    "reply_ids": {
+      "type": "array",
+      "items": {"type": "integer"}
+    },
+    "replies_tree": {
+      "type": "array",
+      "items": {
+        "title": "page",
+        "type": "array",
+        "items": {"$ref": "PostObject"}
+      }
+    },
+    "reply_to_id": {
+      "description": "回复帖所回复的帖子ID",
+      "type": "integer"
+    },
+    "accepted_reply_id": {
+      "description": "回答帖所接受的回复",
+      "type": "integer"
+    },
+    "options": {
+      "description": "投票帖的选项统计",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          },
+          "votes_count": {
+            "type": "integer"
+          },
+          "votes_ids": {
+            "description": "投票用户的ID",
+            "type": "array",
+            "items": {"type": "integer"}
+          }
+        }
+      }
+    }
+  }
+}
+      \code+{end}
       \h2{References - 学习资料}
       \list*{
         \* \link+[RESTful API tutorial]{ http://www.restapitutorial.com/ }
         \* \link+[Learn REST: A Tutorial]{ http://rest.elkstein.org/ }
         \* \link+[Dropbox REST API]{ https://www.dropbox.com/developers/core/docs/ }
         \* \link+[JSON Schema]{ http://json-schema.org/ }
-        \* \link+[AmazonS3 REST API]{ http://docs.aws.amazon.com/AmazonS3/2006-03-01/API/APIRest.html/ }
+        \* \link+[AmazonS3 REST API]{ http://docs.aws.amazon.com/AmazonS3/latest/API/APIRest.html }
+        \* \link+[The RESTful CookBook]{ http://restcookbook.com/ }
+        \* \link+[RFC 6749: OAuth 2.0]{ http://tools.ietf.org/html/rfc6749 }
       }
     </div>
   </div>

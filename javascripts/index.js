@@ -7,5 +7,5 @@ function buildErrorMessage(e) {
 $(document).ready(function () {
   var parsed_ast = pegjs.parse($("#content").text());
   $("#content").jsml(parsed_ast);
-  prettyPrint();
+  // prettyPrint();
 });

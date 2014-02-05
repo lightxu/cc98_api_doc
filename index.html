@@ -35,10 +35,13 @@
       \code+{begin}
 VARIABLE url HTTP_VERSION
 Host: REQUIRED. Example: "www.cc98.org"
-Content-Type: REQUIRED. The content type of the resource in case the request content in the body. Example: "application/json"
+Content-Type: REQUIRED. The content type of the resource in case the request content in the body.
+  Example: "application/json"
 Datetime: REQUIRED. The sending datetime of the request.
-Cache-Control: The Cache-Control general-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
-  Example: "no-cache" | "no-store" | "max-age" | "max-stale" | "min-fresh" | "no-transform" | "only-if-cached" | cache-extension
+Cache-Control: The Cache-Control general-header field is used to specify directives
+  that MUST be obeyed by all caching mechanisms along the request/response chain.
+  Example: "no-cache" | "no-store" | "max-age" | "max-stale" | "min-fresh" |
+    "no-transform" | "only-if-cached" | cache-extension
       \code+{end}
       
       \h3{Access token request - 访问令牌请求}
@@ -81,8 +84,10 @@ HTTP_VERSION RESPONSE_CODE
 Content-Type: "text/html; charset=utf-8"
 Datetime: The response date and time.
 Server: "cc98"
-Cache-Control: The Cache-Control general-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
-  Example: "public" | "private" | no-cache" | "no-store" | "no-transform" | "must-revalidate" | "proxy-revalidate" | "max-age" | "s-maxage" | cache-extension
+Cache-Control: The Cache-Control general-header field is used to specify directives
+  that MUST be obeyed by all caching mechanisms along the request/response chain.
+  Example: "public" | "private" | no-cache" | "no-store" | "no-transform" |
+    "must-revalidate" | "proxy-revalidate" | "max-age" | "s-maxage" | cache-extension
       \code+{end}
       
       \h3{Access token response - 访问令牌响应}

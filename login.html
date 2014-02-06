@@ -40,9 +40,11 @@ Content-Type: \@application/x-www-form-urlencoded\@
   \r{ \h 参数名 \h 是否必需 \h 值 \h 说明 }
   \r{ \d grant_type \d YES \d (string)\@password\@ \d OAuth2 要求}
   \r{ \d username \d YES \d (string)用户登录名 \d OAuth2 要求}
-  \r{ \d password \d YES \d (string)用户密码 \d OAuth2 要求}
+  \r{ \d password \d YES \d (string)用户SHA1(密码) \d OAuth2 要求}
   \r{ \d continue \d YES \d (string)登录成功后跳转的URL \d 进入登录页面前的页面}
 \table{end}
+
+\strong{注意}：使用这个请求时，已经假定用户没有登录，后端验证用户身份后发放access_token；后端应该设定一个合理的时间（请求无效时间），拒绝在此时间内发送的相同的请求，避免用户短时间内多次提交导致发放多个access_token的问题。这个设计允许用户用不同的客户端登录（只要两次登录的间隔大于请求无效时间），后端维护多个access_token。
 
 \h3{Response}
 
